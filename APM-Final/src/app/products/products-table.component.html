@@ -1,0 +1,44 @@
+<div class='table-responsive'>
+  <table class='table'
+         *ngIf='productsLength'>
+    <thead>
+      <tr>
+        <th>
+          <button class='btn btn-primary'
+                  (click)='toggleImage()'>
+            {{showImage ? 'Hide' : 'Show'}} Image
+          </button>
+        </th>
+        <th>Product</th>
+        <th>Code</th>
+        <th>Available</th>
+        <th>Price</th>
+        <th>5 Star Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let product of filteredProducts' class="products-row">
+        <td>
+          <img *ngIf='showImage'
+               [src]='product.imageUrl'
+               [title]='product.productName'
+               [style.width.px]='imageWidth'
+               [style.margin.px]='imageMargin'>
+        </td>
+        <td>
+          <a [routerLink]="['/products', product.productId]">
+            {{ product.productName }}
+          </a>
+        </td>
+        <td>{{ product.productCode | lowercase | convertToSpaces:'-' }}</td>
+        <td>{{ product.releaseDate }}</td>
+        <td>{{ product.price | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td>
+          <pm-star [rating]='product.starRating'
+                   (ratingClicked)='onRatingClicked($event)'>
+          </pm-star>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
